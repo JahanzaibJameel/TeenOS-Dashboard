@@ -1,0 +1,1243 @@
+// Variables
+$primary-color: #4a6fa5;
+$primary-light: #6b8cbc;
+$primary-dark: #3b5a85;
+$secondary-color: #6b8cbc;
+$accent-color: #ff6b6b;
+$text-color: #333;
+$text-light: #666;
+$text-lighter: #999;
+$background-color: #f8f9fa;
+$card-background: #ffffff;
+$border-color: #e0e0e0;
+$success-color: #4caf50;
+$warning-color: #ff9800;
+$error-color: #f44336;
+$shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+$shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
+$shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+// Mobile-first breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-laptop: 1024px;
+$breakpoint-desktop: 1200px;
+$breakpoint-large: 1400px;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin card {
+  background: $card-background;
+  border-radius: 16px;
+  box-shadow: $shadow-medium;
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, $primary-color, $secondary-color);
+  }
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-heavy;
+  }
+}
+
+// Global styles
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $background-color;
+  color: $text-color;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f4 100%);
+  min-height: 100vh;
+}
+
+// App container - Mobile First
+.app-authenticated {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-unauthenticated {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f4 100%);
+  
+  h1 {
+    font-size: 2.2rem;
+    color: $primary-color;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, $primary-color, $primary-dark);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    color: $text-light;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+}
+
+.app-loading {
+  @include flex-center;
+  height: 100vh;
+  font-size: 1.4rem;
+  color: $primary-color;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f4 100%);
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: $primary-color;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  margin-right: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Header styles
+.app-header {
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: white;
+  padding: 1.2rem 1rem;
+  box-shadow: $shadow-light;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: rgba(74, 111, 165, 0.95);
+
+  h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: -0.5px;
+  }
+}
+
+.main-nav ul {
+  list-style-type: none;
+  margin: 1rem 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+
+  li {
+    flex: 1 1 auto;
+  }
+
+  li a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: block;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    &.active {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+// Main content - Mobile First
+.app-main {
+  flex: 1;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  max-width: 100%;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-content {
+  flex: 1;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.8rem;
+}
+
+.dashboard-section {
+  @include card;
+  
+  h2 {
+    color: $primary-color;
+    margin-top: 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    
+    svg {
+      width: 1.3em;
+      height: 1.3em;
+    }
+  }
+  
+  p {
+    color: $text-light;
+    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  
+  .section-content {
+    margin-top: 1.2rem;
+  }
+}
+
+// Sidebar - Mobile First (Hidden by default)
+.sidebar {
+  background: $card-background;
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: $shadow-medium;
+  display: none;
+  backdrop-filter: blur(10px);
+  
+  h3 {
+    color: $primary-color;
+    margin-top: 0;
+    border-bottom: 2px solid $primary-light;
+    padding-bottom: 0.75rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  
+  .quick-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    
+    .stat-card {
+      background: linear-gradient(135deg, #f8fafc, #eef2f7);
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba($border-color, 0.5);
+      transition: transform 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $primary-color;
+        margin-bottom: 0.25rem;
+      }
+      
+      .stat-label {
+        font-size: 0.85rem;
+        color: $text-light;
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .quick-actions {
+    button {
+      width: 100%;
+      margin-bottom: 0.75rem;
+      padding: 0.9rem;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, $primary-color, $primary-dark);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      box-shadow: $shadow-light;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-medium;
+        background: linear-gradient(135deg, $primary-dark, #2a4a75);
+      }
+      
+      &:first-child {
+        margin-top: 1rem;
+      }
+    }
+  }
+}
+
+// Footer styles
+.app-footer {
+  background: linear-gradient(135deg, $primary-dark, #2a4a75);
+  color: white;
+  text-align: center;
+  padding: 1.2rem;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+  p {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+}
+
+// Form elements
+.form-group {
+  margin-bottom: 1.8rem;
+  
+  label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: $text-color;
+    font-size: 1.05rem;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 2px solid $border-color;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    background: white;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+      transform: translateY(-1px);
+    }
+    
+    &::placeholder {
+      color: $text-lighter;
+    }
+  }
+}
+
+button {
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: white;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: $shadow-light;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, $primary-dark, #2a4a75);
+    transform: translateY(-2px);
+    box-shadow: $shadow-medium;
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  &.btn-secondary {
+    background: linear-gradient(135deg, $secondary-color, $primary-light);
+    
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, $primary-light, $primary-color);
+    }
+  }
+  
+  &.btn-danger {
+    background: linear-gradient(135deg, $error-color, #d32f2f);
+    
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    }
+  }
+}
+
+// Utility classes
+.error {
+  color: $error-color;
+  background-color: rgba($error-color, 0.1);
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 1rem 0;
+  border-left: 4px solid $error-color;
+  font-size: 0.95rem;
+  border: 1px solid rgba($error-color, 0.2);
+}
+
+.success {
+  color: $success-color;
+  background-color: rgba($success-color, 0.1);
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 1rem 0;
+  border-left: 4px solid $success-color;
+  font-size: 0.95rem;
+  border: 1px solid rgba($success-color, 0.2);
+}
+
+.loading {
+  color: $primary-color;
+  font-style: italic;
+  text-align: center;
+  padding: 2.5rem;
+  font-size: 1.1rem;
+}
+
+// Progress bars
+.progress-bar {
+  width: 100%;
+  height: 14px;
+  background-color: #e0e0e0;
+  border-radius: 7px;
+  overflow: hidden;
+  margin: 1.2rem 0;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, $primary-color, $primary-light);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 7px;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%
+      );
+      background-size: 20px 20px;
+      animation: progress-shine 2s infinite linear;
+    }
+  }
+}
+
+@keyframes progress-shine {
+  0% { background-position: 0 0; }
+  100% { background-position: 20px 20px; }
+}
+
+// Login container styles
+.login-container {
+  margin-top: 2.5rem;
+  text-align: center;
+  
+  button {
+    background: linear-gradient(135deg, $primary-color, $primary-dark);
+    color: white;
+    border: none;
+    padding: 1.1rem 2.5rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: $shadow-medium;
+    min-width: 220px;
+    
+    &:hover {
+      background: linear-gradient(135deg, $primary-dark, #2a4a75);
+      transform: translateY(-3px);
+      box-shadow: $shadow-heavy;
+    }
+  }
+}
+
+// Finance Domain Styles - Added for proper layout
+.finance-domain {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  h2 {
+    color: $primary-color;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  
+  .finance-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 1rem;
+    
+    button {
+      padding: 0.875rem 1.5rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      font-size: 1rem;
+      border: 1px solid transparent;
+      
+      &.active {
+        color: $primary-color;
+        background: rgba($primary-color, 0.1);
+        border-color: $primary-color;
+        box-shadow: 0 2px 8px rgba($primary-color, 0.15);
+      }
+      
+      &:hover {
+        background: rgba($primary-color, 0.05);
+        color: $primary-dark;
+      }
+    }
+  }
+  
+  .finance-content {
+    flex: 1;
+    width: 100%;
+    
+    .tab-content {
+      padding: 1.5rem 0;
+      width: 100%;
+    }
+    
+    .forms-section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid $border-color;
+      
+      .finance-form {
+        @include card;
+        width: 100%;
+        
+        h3 {
+          color: $primary-color;
+          margin-bottom: 1.2rem;
+          font-size: 1.3rem;
+          font-weight: 600;
+        }
+        
+        .error {
+          color: $error-color;
+          margin-bottom: 1.2rem;
+          padding: 0.875rem;
+          background-color: rgba($error-color, 0.1);
+          border-radius: 8px;
+          border-left: 4px solid $error-color;
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+}
+
+.transaction-list, .budget-list, .savings-goal-list {
+  @include card;
+  width: 100%;
+
+  h3 {
+    color: $primary-color;
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+
+.transactions-table, .budgets-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: $shadow-light;
+  
+  th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid $border-color;
+  }
+  
+  th {
+    background: linear-gradient(to bottom, #f8f9fa, #eef2f7);
+    font-weight: 600;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+  
+  tr {
+    transition: background-color 0.2s ease;
+  }
+  
+  tr:hover {
+    background-color: rgba($primary-color, 0.03);
+  }
+  
+  .transaction-type {
+    &.income {
+      color: $success-color;
+      font-weight: 600;
+      background: rgba($success-color, 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+    &.expense {
+      color: $error-color;
+      font-weight: 600;
+      background: rgba($error-color, 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+  }
+  
+  .transaction-amount {
+    font-weight: 700;
+    
+    &.income {
+      color: $success-color;
+    }
+    &.expense {
+      color: $error-color;
+    }
+  }
+}
+
+.budget-list {
+  .budget-item {
+    margin-bottom: 1.5rem;
+    padding: 1.2rem;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, #fff, #fafafa);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-medium;
+    }
+    
+    .budget-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .budget-bar {
+      width: 100%;
+      height: 14px;
+      background-color: #e5e7eb;
+      border-radius: 7px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      
+      .budget-progress {
+        height: 100%;
+        background: linear-gradient(90deg, $success-color, #66bb6a);
+        transition: width 0.4s ease;
+        border-radius: 7px;
+        
+        &.over-budget {
+          background: linear-gradient(90deg, $error-color, #ef5350);
+        }
+      }
+    }
+    
+    .budget-percentage {
+      text-align: right;
+      font-size: 0.875rem;
+      color: #666;
+      font-weight: 600;
+    }
+  }
+}
+
+.budgets-table {
+  .budget-status {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    
+    .budget-progress {
+      height: 10px;
+      background-color: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+      flex-grow: 1;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      
+      div {
+        height: 100%;
+        background: linear-gradient(90deg, $success-color, #66bb6a);
+        transition: width 0.4s ease;
+        
+        &.over-budget {
+          background: linear-gradient(90deg, $error-color, #ef5350);
+        }
+      }
+    }
+  }
+}
+
+.savings-goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.savings-card {
+  @include card;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+  
+  &.completed {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-color: $success-color;
+    opacity: 0.95;
+  }
+  
+  .savings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    
+    h4 {
+      margin: 0;
+      color: $primary-color;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+    
+    .completed-badge {
+      background: linear-gradient(135deg, $success-color, #66bb6a);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+  
+  .savings-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    
+    .savings-amount {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      
+      .current {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: $primary-color;
+      }
+      
+      .separator {
+        color: #666;
+        font-weight: normal;
+      }
+      
+      .target {
+        color: #666;
+        text-decoration: line-through;
+        font-size: 1.1rem;
+      }
+    }
+    
+    .savings-percentage {
+      font-weight: 700;
+      color: $primary-color;
+      font-size: 1.2rem;
+      background: rgba($primary-color, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+    }
+  }
+  
+  .savings-progress {
+    width: 100%;
+    height: 12px;
+    background-color: #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, $primary-color, $secondary-color);
+      transition: width 0.4s ease;
+    }
+  }
+  
+  .savings-details {
+    margin-bottom: 1.2rem;
+    
+    .days-left {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-weight: 500;
+    }
+    
+    .savings-description {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+  }
+  
+  .savings-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+}
+
+.financial-dashboard {
+  width: 100%;
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .summary-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.875rem 0;
+      border-bottom: 1px solid $border-color;
+      
+      span:last-child {
+        font-weight: 700;
+        font-size: 1.15rem;
+        
+        &.positive {
+          color: $success-color;
+        }
+        
+        &.negative {
+          color: $error-color;
+        }
+      }
+    }
+  }
+  
+  .progress-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.2rem;
+    margin: 1.5rem 0;
+    
+    .stat {
+      text-align: center;
+      padding: 1.2rem;
+      background: linear-gradient(135deg, #f8f9fa, #eef2f7);
+      border-radius: 10px;
+      border: 1px solid rgba($border-color, 0.3);
+      transition: transform 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+      }
+      
+      .stat-number {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: $primary-color;
+        margin-bottom: 0.25rem;
+      }
+      
+      .stat-label {
+        font-size: 0.85rem;
+        color: #666;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+  
+  .category-list, .budget-list {
+    .category-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.875rem 0;
+      border-bottom: 1px solid $border-color;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+// Responsive Design - Desktop First Approach
+@media (min-width: $breakpoint-tablet) {
+  .app-unauthenticated {
+    h1 {
+      font-size: 2.8rem;
+    }
+    
+    p {
+      font-size: 1.3rem;
+    }
+  }
+  
+  .app-header {
+    padding: 1.2rem 1.5rem;
+    
+    h1 {
+      font-size: 2rem;
+      text-align: left;
+    }
+  }
+  
+  .main-nav ul {
+    margin: 0;
+    gap: 1.2rem;
+    
+    li a {
+      font-size: 1.05rem;
+      padding: 0.8rem 1.3rem;
+    }
+  }
+  
+  .app-main {
+    padding: 1.8rem;
+    gap: 2rem;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .quick-stats {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  
+  // Finance domain responsive adjustments
+  .finance-tabs {
+    flex-wrap: nowrap;
+  }
+  
+  .financial-dashboard {
+    .progress-stats {
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-laptop) {
+  .app-header {
+    h1 {
+      font-size: 2.2rem;
+    }
+  }
+  
+  .app-main {
+    flex-direction: row;
+    padding: 2.2rem;
+  }
+  
+  .sidebar {
+    display: block;
+    flex: 0 0 320px;
+    height: fit-content;
+    position: sticky;
+    top: 2.2rem;
+  }
+  
+  .dashboard-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .main-nav ul {
+    flex-wrap: nowrap;
+  }
+  
+  // Finance domain desktop adjustments
+  .finance-domain {
+    .finance-tabs {
+      button {
+        min-width: 140px;
+      }
+    }
+  }
+  
+  .savings-goals-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .app-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2.2rem;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .app-header {
+    padding: 1.2rem 2.2rem;
+  }
+  
+  .app-unauthenticated {
+    h1 {
+      font-size: 3.2rem;
+    }
+    
+    p {
+      font-size: 1.4rem;
+    }
+  }
+  
+  // Finance domain desktop layout
+  .financial-dashboard {
+    .dashboard-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .savings-goals-grid {
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  }
+}
+
+@media (min-width: $breakpoint-large) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .app-main {
+    padding: 2.8rem;
+  }
+  
+  .sidebar {
+    flex: 0 0 350px;
+  }
+  
+  // Large screen finance adjustments
+  .financial-dashboard {
+    .dashboard-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .savings-goals-grid {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+}
+
+// Mobile-specific optimizations
+@media (max-width: $breakpoint-mobile) {
+  .app-unauthenticated {
+    padding: 0.8rem;
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    p {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .app-header {
+    padding: 0.9rem;
+    
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .main-nav ul {
+    li a {
+      font-size: 0.85rem;
+      padding: 0.7rem;
+    }
+  }
+  
+  .app-main {
+    padding: 1rem;
+  }
+  
+  .dashboard-section {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .quick-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .login-container button {
+    min-width: 200px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+  
+  // Mobile finance adjustments
+  .finance-tabs {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  
+  .savings-goals-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .financial-dashboard {
+    .progress-stats {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+}
