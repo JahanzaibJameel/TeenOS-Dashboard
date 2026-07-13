@@ -297,35 +297,6 @@ CMD ["nginx", "-g", "daemon off;"]
 - Regular security audits
 - Penetration testing
 
-## Future Roadmap
-
-### Q1 2026
-- Mobile application development
-- Advanced analytics dashboard
-- Social features integration
-- Multi-language support
-- Offline functionality
-
-### Q2 2026
-- Machine learning recommendations
-- Voice command integration
-- Calendar synchronization
-- Integration with educational platforms
-- Parental control features
-
-### Q3 2026
-- Advanced AI capabilities
-- Community features
-- Marketplace integration
-- Certification system
-- Advanced reporting
-
-### Q4 2026
-- Enterprise version
-- API monetization
-- Advanced customization
-- White-label solutions
-- Global expansion
 
 ## Contribution Guide
 
