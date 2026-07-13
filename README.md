@@ -325,14 +325,6 @@ CMD ["nginx", "-g", "daemon off;"]
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Authors
-
-**Senior Engineering Team**
-- Lead Architect: [Name]
-- Frontend Engineering: [Name]
-- Backend Engineering: [Name]
-- DevOps Engineering: [Name]
-- Product Management: [Name]
 
 **Enterprise Development Partners**
 - Technical Consulting: FAANG-level engineering consultants
